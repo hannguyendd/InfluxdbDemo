@@ -1,0 +1,29 @@
+@InfluxdbService_HostAddress = http://localhost:5220
+
+# Record a vital sign
+POST {{InfluxdbService_HostAddress}}/vitalsigns
+Content-Type: application/json
+
+{
+  "patientId": "patient-001",
+  "heartRate": 72,
+  "bloodPressureSystolic": 120,
+  "bloodPressureDiastolic": 80,
+  "temperature": 36.6,
+  "oxygenSaturation": 98,
+  "respiratoryRate": 16
+}
+
+###
+
+# Get vital signs for a patient (last hour)
+GET {{InfluxdbService_HostAddress}}/vitalsigns/patient-001
+Accept: application/json
+
+###
+
+# Get vital signs for a patient (last 24 hours)
+GET {{InfluxdbService_HostAddress}}/vitalsigns/patient-001?range=-24h
+Accept: application/json
+
+###
