@@ -45,6 +45,24 @@ public class VitalSignService : IDisposable
         await writeApi.WriteMeasurementAsync(vitalSign, WritePrecision.Ns, _bucket, _org);
     }
 
+    public async Task WriteVitalSignsAsync(IEnumerable<VitalSignRequest> requests)
+    {
+        var vitalSigns = requests.Select(request => new VitalSign
+        {
+            PatientId = request.PatientId,
+            HeartRate = request.HeartRate,
+            BloodPressureSystolic = request.BloodPressureSystolic,
+            BloodPressureDiastolic = request.BloodPressureDiastolic,
+            Temperature = request.Temperature,
+            OxygenSaturation = request.OxygenSaturation,
+            RespiratoryRate = request.RespiratoryRate,
+            Time = DateTime.UtcNow
+        }).ToList();
+
+        var writeApi = _client.GetWriteApiAsync();
+        await writeApi.WriteMeasurementsAsync(vitalSigns, WritePrecision.Ns, _bucket, _org);
+    }
+
     public async Task<List<VitalSign>> GetVitalSignsAsync(string patientId, string range = "-1h")
     {
         var hours = ParseRangeToHours(range);

@@ -27,3 +27,30 @@ GET {{InfluxdbService_HostAddress}}/vitalsigns/patient-001?range=-24h
 Accept: application/json
 
 ###
+
+# Record multiple vital signs in bulk
+POST {{InfluxdbService_HostAddress}}/vitalsigns/bulk
+Content-Type: application/json
+
+[
+  {
+    "patientId": "patient-001",
+    "heartRate": 72,
+    "bloodPressureSystolic": 120,
+    "bloodPressureDiastolic": 80,
+    "temperature": 36.6,
+    "oxygenSaturation": 98,
+    "respiratoryRate": 16
+  },
+  {
+    "patientId": "patient-002",
+    "heartRate": 80,
+    "bloodPressureSystolic": 130,
+    "bloodPressureDiastolic": 85,
+    "temperature": 37.0,
+    "oxygenSaturation": 97,
+    "respiratoryRate": 18
+  }
+]
+
+###

@@ -35,6 +35,7 @@ dotnet restore
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | `/vitalsigns` | Record a vital sign measurement |
+| POST | `/vitalsigns/bulk` | Record multiple vital signs in bulk |
 | GET | `/vitalsigns/{patientId}` | Get vital signs for a patient |
 | GET | `/vitalsigns/{patientId}?range=-24h` | Get vital signs with time range |
 
@@ -51,6 +52,11 @@ curl http://localhost:5220/vitalsigns/patient-001
 
 # Get vital signs (last 24 hours)
 curl http://localhost:5220/vitalsigns/patient-001?range=-24h
+
+# Record multiple vital signs in bulk
+curl -X POST http://localhost:5220/vitalsigns/bulk \
+  -H "Content-Type: application/json" \
+  -d '[{"patientId":"patient-001","heartRate":72,"bloodPressureSystolic":120,"bloodPressureDiastolic":80,"temperature":36.6,"oxygenSaturation":98,"respiratoryRate":16},{"patientId":"patient-002","heartRate":80,"bloodPressureSystolic":130,"bloodPressureDiastolic":85,"temperature":37.0,"oxygenSaturation":97,"respiratoryRate":18}]'
 ```
 
 ## Architecture
